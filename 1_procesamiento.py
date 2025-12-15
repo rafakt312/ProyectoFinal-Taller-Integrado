@@ -22,17 +22,17 @@ def calcular_magnitud(df, col_x, col_y, col_z):
     return np.sqrt(df[col_x]**2 + df[col_y]**2 + df[col_z]**2)
 
 def extraer_features(ventana_df):
-    """
-    Colapsa 100 filas (una ventana) en 1 sola fila con estadísticas.
-    """
     features = {}
     for col in ventana_df.columns:
         datos = ventana_df[col].values
+        # --- LAS 7 ESTADÍSTICAS ---
         features[f"{col}_mean"] = np.mean(datos)
-        features[f"{col}_std"] = np.std(datos)
-        features[f"{col}_max"] = np.max(datos)
-        features[f"{col}_min"] = np.min(datos)
-        # Puedes agregar más stats si quieres (kurtosis, skew, etc.)
+        features[f"{col}_std"]  = np.std(datos)
+        features[f"{col}_max"]  = np.max(datos)
+        features[f"{col}_min"]  = np.min(datos)
+        features[f"{col}_med"]  = np.median(datos)  # <--- Faltaba esta?
+        features[f"{col}_ptp"]  = np.ptp(datos)     # <--- Faltaba esta?
+        features[f"{col}_var"]  = np.var(datos)     # <--- Faltaba esta?
     return features
 
 def procesar_sujeto(filepath, sujeto_id):
